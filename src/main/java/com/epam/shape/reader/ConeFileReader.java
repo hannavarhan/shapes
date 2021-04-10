@@ -10,16 +10,23 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class ConeFileReader {
 
     private final static Logger logger = LogManager.getLogger(CalculationServiceImpl.class);
 
-    public ArrayList<String> readLinesFromFile(String path) throws ConeException { //use java 8
-        ArrayList<String> result = null;
-        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
-            String line = reader.readLine();
+    public ArrayList<String> readLinesFromFile(String path) throws ConeException {
+        ArrayList<String> result;
+        try {
+            result = Files.lines(Paths.get(path), StandardCharsets.UTF_8)
+                    .filter(ConeStringValidator::isCone)
+                    .collect(Collectors.toCollection(ArrayList::new));
+            /*String line = reader.readLine();
             while (line != null) {
                 if (ConeStringValidator.isCone(line)) {
                     result.add(line);
@@ -28,10 +35,7 @@ public class ConeFileReader {
                     logger.error("line " + line + " is invalid");
                 }
                 line = reader.readLine();
-            }
-        } catch (FileNotFoundException e) {
-            logger.error("file " + path + " not found in read from file method");
-            throw new ConeException("file not found in read from file method");
+            }*/
         } catch (IOException e) {
             logger.error("IOException in read from file method");
             throw new ConeException("IOException in read from file method");

@@ -9,15 +9,22 @@ public class Cone {
     private Point center;
     private double radius;
     private double height;
-    private int coneId;
+    private static int counter;
+    private long coneId;
+
+    static {
+        counter = 0;
+    }
 
     public Cone(Point center, double radius, double height) {
         this.center = center;
         this.radius = radius;
         this.height = height;
+        this.coneId = counter++;
     }
 
     public Cone() {
+        this.coneId = counter++;
     }
 
     public Point getCenter() {
@@ -47,7 +54,7 @@ public class Cone {
         this.height = height;
     }
 
-    public int getConeId() {
+    public long getConeId() {
         return coneId;
     }
 
@@ -58,7 +65,7 @@ public class Cone {
         Cone that = (Cone) o;
         return Double.compare(that.radius, radius) == 0 &&
                 Double.compare(that.height, height) == 0 &&
-                coneId == that.coneId &&
+                coneId == that.coneId && //do we need to compare by id here??
                 center.equals(that.center);
     }
 
@@ -69,7 +76,7 @@ public class Cone {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("CustomCone{");
+        final StringBuilder sb = new StringBuilder("Cone{");
         sb.append("center=").append(center);
         sb.append(", radius=").append(radius);
         sb.append(", height=").append(height);
