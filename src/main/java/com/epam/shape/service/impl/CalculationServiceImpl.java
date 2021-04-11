@@ -18,11 +18,13 @@ public class CalculationServiceImpl implements CalculationService {
             throw new ConeException("cone shouldn't be null");
         }
         double generatrixLength = Math.sqrt(cone.getRadius() * cone.getRadius() +
-                cone.getHeight() + cone.getHeight());
+                cone.getHeight() * cone.getHeight());
         double surfaceArea = Math.PI * cone.getRadius() * generatrixLength +
                 Math.PI * cone.getRadius() * cone.getRadius();
-        logger.info("surfaceArea is " + surfaceArea);
-        return surfaceArea;
+        String result = String.format("%.2f", surfaceArea).replace(",", ".");
+        double surfaceAreaResult = Double.parseDouble(result);
+        logger.info("surfaceArea is " + surfaceAreaResult);
+        return surfaceAreaResult;
     }
 
     @Override
@@ -32,8 +34,10 @@ public class CalculationServiceImpl implements CalculationService {
             throw new ConeException("cone shouldn't be null");
         }
         double volume = Math.PI * cone.getHeight() * cone.getRadius() * cone.getRadius() / 3.0;
-        logger.info("volume is " + volume);
-        return volume;
+        String result = String.format("%.2f", volume).replace(",", ".");
+        double volumeResult = Double.parseDouble(result);
+        logger.info("volume is " + volumeResult);
+        return volumeResult;
     }
 
     @Override
@@ -48,11 +52,17 @@ public class CalculationServiceImpl implements CalculationService {
         }
         double secondHeight = cone.getCenter().getZ() + cone.getHeight() - z;
         double secondRadius = secondHeight * cone.getRadius() / cone.getHeight();
-        double higherVolume = Math.PI * secondRadius * secondRadius * secondHeight / 3.0;
+        Cone littleCone = new Cone(cone.getCenter(), secondRadius, secondHeight);
+        double higherVolume = calculateVolume(littleCone);
+
         double lowerVolume = calculateVolume(cone) - higherVolume;
+        logger.info("lowerVolume: " + lowerVolume);
+
         double ratio = higherVolume / lowerVolume;
-        logger.info("ratio is " + ratio);
-        return ratio;
+        String result = String.format("%.2f", ratio).replace(",", ".");
+        double ratioResult = Double.parseDouble(result);
+        logger.info("ratio is " + ratioResult);
+        return ratioResult;
     }
 
     @Override
