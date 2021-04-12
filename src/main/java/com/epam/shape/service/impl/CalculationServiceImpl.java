@@ -4,6 +4,7 @@ import com.epam.shape.entity.Cone;
 import com.epam.shape.entity.Point;
 import com.epam.shape.exception.ConeException;
 import com.epam.shape.service.CalculationService;
+import com.epam.shape.validator.ConeDataValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -66,8 +67,8 @@ public class CalculationServiceImpl implements CalculationService {
     }
 
     @Override
-    public boolean isCustomCone(Point center, double radius, double height) { //???
-        boolean isCone = radius > 0 && height > 0;
+    public boolean isCustomCone(Point center, double radius, double height) { //????????????????????
+        boolean isCone = ConeDataValidator.isRadiusValid(radius) && ConeDataValidator.isHeightValid(height);
         return isCone;
     }
 

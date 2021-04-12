@@ -1,6 +1,7 @@
 package com.epam.shape.exception;
 
 public class ConeException extends Exception {
+
     public ConeException() {
     }
 

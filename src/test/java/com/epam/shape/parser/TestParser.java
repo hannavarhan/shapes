@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 
 public class TestParser {
 
-    StringParser parser = new StringParser();
+    ConeParser parser = new ConeParser();
 
     @Test
     public void testParser() throws ConeException {

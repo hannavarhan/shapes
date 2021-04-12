@@ -27,8 +27,7 @@ public class VolumeSpecification implements Specification {
         try {
             volume = service.calculateVolume(cone);
         } catch (ConeException e) {
-            logger.info("exception cannot be generated here, check it!!!");
-            //exception cannot be generated here, should I catch it here??
+            logger.info("exception cannot be generated here");
         }
         boolean result = volume >= minVolume && volume <= maxVolume;
         return result;

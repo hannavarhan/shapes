@@ -1,7 +1,5 @@
 package com.epam.shape.entity;
 
-import java.util.Objects;
-
 public class Point {
 
     private double x;
@@ -63,6 +61,9 @@ public class Point {
 
     @Override
     public int hashCode() {
-        return Objects.hash(x, y, z);
+        int result = (int) x;
+        result = 31 * result + (int) y;
+        result = 31 * result + (int) z;
+        return result;
     }
 }

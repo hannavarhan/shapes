@@ -6,9 +6,6 @@ import com.epam.shape.validator.ConeStringValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -26,16 +23,6 @@ public class ConeFileReader {
             result = Files.lines(Paths.get(path), StandardCharsets.UTF_8)
                     .filter(ConeStringValidator::isCone)
                     .collect(Collectors.toCollection(ArrayList::new));
-            /*String line = reader.readLine();
-            while (line != null) {
-                if (ConeStringValidator.isCone(line)) {
-                    result.add(line);
-                    logger.info("string " + line + " is read");
-                } else {
-                    logger.error("line " + line + " is invalid");
-                }
-                line = reader.readLine();
-            }*/
         } catch (IOException e) {
             logger.error("IOException in read from file method");
             throw new ConeException("IOException in read from file method");

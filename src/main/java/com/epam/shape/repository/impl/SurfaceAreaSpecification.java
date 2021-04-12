@@ -27,8 +27,7 @@ public class SurfaceAreaSpecification implements Specification {
         try {
             surfaceArea = service.calculateSurfaceArea(cone);
         } catch (ConeException e) {
-            logger.info("exception cannot be generated here, check it!!!");
-            //exception cannot be generated here, should I catch it here??
+            logger.info("exception cannot be generated here");
         }
         boolean result = surfaceArea >= minSurfaceArea && surfaceArea <= maxSurfaceArea;
         return result;

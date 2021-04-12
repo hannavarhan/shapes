@@ -1,11 +1,9 @@
 package com.epam.shape.entity;
 
-import java.util.Objects;
-
 public class ShapeParameters {
 
-    double surfaceArea;
-    double volume;
+    private double surfaceArea;
+    private double volume;
 
     public double getSurfaceArea() {
         return surfaceArea;
@@ -34,7 +32,9 @@ public class ShapeParameters {
 
     @Override
     public int hashCode() {
-        return Objects.hash(surfaceArea, volume);
+        int result = (int) surfaceArea;
+        result = 31 * result + (int) volume;
+        return result;
     }
 
     @Override

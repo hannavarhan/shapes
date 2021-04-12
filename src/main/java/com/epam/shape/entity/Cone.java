@@ -4,32 +4,23 @@ import com.epam.shape.exception.ConeException;
 import com.epam.shape.observer.ConeEvent;
 import com.epam.shape.observer.Observable;
 import com.epam.shape.observer.Observer;
+import com.epam.shape.validator.ConeDataValidator;
 
 import java.util.ArrayList;
-import java.util.Objects;
+import java.util.Comparator;
 
-public class Cone implements Observable {
+public class Cone extends Shape implements Observable {
 
     private Point center;
     private double radius;
     private double height;
-    private static int counter;
-    private long coneId;
     private ArrayList<Observer> observers = new ArrayList<>();
 
-    static {
-        counter = 0;
-    }
-
     public Cone(Point center, double radius, double height) {
+        super();
         this.center = center;
         this.radius = radius;
         this.height = height;
-        this.coneId = counter++;
-    }
-
-    public Cone() {
-        this.coneId = counter++;
     }
 
     public Point getCenter() {
@@ -46,7 +37,7 @@ public class Cone implements Observable {
     }
 
     public void setRadius(double radius) throws ConeException {
-        if (radius <= 0) {
+        if (!ConeDataValidator.isRadiusValid(radius)) {
             throw new ConeException("radius cannot be null");
         }
         this.radius = radius;
@@ -57,13 +48,12 @@ public class Cone implements Observable {
         return height;
     }
 
-    public void setHeight(double height) {
+    public void setHeight(double height) throws ConeException {
+        if (!ConeDataValidator.isHeightValid(radius)) {
+            throw new ConeException("height cannot be null");
+        }
         this.height = height;
         notifyObservers();
-    }
-
-    public long getConeId() {
-        return coneId;
     }
 
     @Override
@@ -94,23 +84,61 @@ public class Cone implements Observable {
         Cone that = (Cone) o;
         return Double.compare(that.radius, radius) == 0 &&
                 Double.compare(that.height, height) == 0 &&
-                coneId == that.coneId && //do we need to compare by id here??
                 center.equals(that.center);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(center, radius, height, coneId);
+        int result = center == null ? 0 : center.hashCode();
+        result = 31 * result + (int) radius;
+        result = 31 * result + (int) height;
+        return result;
     }
 
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Cone{");
+        sb.append("coneId=").append(this.getId());
         sb.append("center=").append(center);
         sb.append(", radius=").append(radius);
         sb.append(", height=").append(height);
-        sb.append(", coneId=").append(coneId);
         sb.append('}');
         return sb.toString();
     }
+
+    public static class HeightComparator implements Comparator<Cone> {
+        @Override
+        public int compare(Cone o1, Cone o2) {
+            return Double.compare(o1.getHeight(), o2.getHeight());
+        }
+    }
+
+    public static class RadiusComparator implements Comparator<Cone> {
+        @Override
+        public int compare(Cone o1, Cone o2) {
+            return Double.compare(o1.getRadius(), o2.getRadius());
+        }
+    }
+
+    public static class XPointComparator implements Comparator<Cone> {
+        @Override
+        public int compare(Cone o1, Cone o2) {
+            return Double.compare(o1.getCenter().getX(), o2.getCenter().getX());
+        }
+    }
+
+    public static class YPointComparator implements Comparator<Cone> {
+        @Override
+        public int compare(Cone o1, Cone o2) {
+            return Double.compare(o1.getCenter().getY(), o2.getCenter().getY());
+        }
+    }
+
+    public static class ZPointComparator implements Comparator<Cone> {
+        @Override
+        public int compare(Cone o1, Cone o2) {
+            return Double.compare(o1.getCenter().getZ(), o2.getCenter().getZ());
+        }
+    }
+
 }

@@ -1,6 +1,5 @@
 package com.epam.shape.entity;
 
-import com.epam.shape.parser.StringParser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -11,7 +10,7 @@ public class Warehouse {
 
     private final static Logger logger = LogManager.getLogger(Warehouse.class);
 
-    Map<Long, ShapeParameters> map;
+    private Map<Long, ShapeParameters> map;
     private static Warehouse instance;
 
     public static Warehouse getInstance() {
@@ -28,10 +27,6 @@ public class Warehouse {
 
     public ShapeParameters get(Long id) {
         return map.get(id);
-    }
-
-    public Map<Long, ShapeParameters> getMap() {
-        return map;
     }
 
     public ShapeParameters put(Long id, ShapeParameters value) {

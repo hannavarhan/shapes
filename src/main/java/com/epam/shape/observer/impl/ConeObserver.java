@@ -17,8 +17,8 @@ public class ConeObserver implements Observer {
 
     @Override
     public void updateSurfaceArea(ConeEvent coneEvent) {
-        Cone cone = (Cone) coneEvent.getSource();
-        long id = cone.getConeId();
+        Cone cone = coneEvent.getSource();
+        long id = cone.getId();
         Warehouse warehouse = Warehouse.getInstance();
         ShapeParameters parameters = warehouse.get(id);
         CalculationService service = new CalculationServiceImpl();
@@ -32,8 +32,8 @@ public class ConeObserver implements Observer {
 
     @Override
     public void updateVolume(ConeEvent coneEvent) {
-        Cone cone = (Cone) coneEvent.getSource();
-        long id = cone.getConeId();
+        Cone cone = coneEvent.getSource();
+        long id = cone.getId();
         Warehouse warehouse = Warehouse.getInstance();
         ShapeParameters parameters = warehouse.get(id);
         CalculationService service = new CalculationServiceImpl();

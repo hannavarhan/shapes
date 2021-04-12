@@ -13,7 +13,7 @@ public class IdSpecification implements Specification {
 
     @Override
     public boolean specify(Cone cone) {
-        boolean result = cone.getConeId() == id;
+        boolean result = cone.getId() == id;
         return result;
     }
 }

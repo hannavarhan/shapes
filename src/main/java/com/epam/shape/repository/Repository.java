@@ -1,18 +1,35 @@
 package com.epam.shape.repository;
 
 import com.epam.shape.entity.Cone;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Repository {
 
+    private final static Logger logger = LogManager.getLogger(Repository.class);
+
     private List<Cone> cones;
+    private static Repository instance;
+
+    public static Repository getInstance() {
+        if (instance == null) {
+            logger.info("creating singleton repository");
+            instance = new Repository();
+        }
+        return instance;
+    }
+
+    private Repository() {
+        cones = new ArrayList<>();
+    }
 
     public List<Cone> getCones() {
-        return cones;
+        List<Cone> result = new ArrayList<>();
+        Collections.copy(result, this.cones);
+        return result;
     }
 
     public boolean add(Cone cone) {
@@ -27,7 +44,7 @@ public class Repository {
         return cones.remove(element);
     }
 
-    public boolean removeAll(Collection<?> c) {
+    public boolean removeAll(Collection<Cone> c) {
         return cones.removeAll(c);
     }
 
@@ -40,7 +57,7 @@ public class Repository {
     }
 
     public List<Cone> query(Specification specification) {
-        List<Cone> result = null;
+        List<Cone> result = new ArrayList<>();
         for (Cone cone : cones) {
             if (specification.specify(cone)) {
                 result.add(cone);
@@ -50,8 +67,7 @@ public class Repository {
     }
 
     public List<Cone> queryStream(Specification specification) {
-        List<Cone> result = cones.stream().filter(specification::specify).collect(Collectors.toList());
-        return result;
+        return cones.stream().filter(specification::specify).collect(Collectors.toList());
     }
 
     public List<Cone> sort(Comparator<? super Cone> comparator) {

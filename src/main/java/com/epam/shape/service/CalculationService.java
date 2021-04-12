@@ -12,7 +12,7 @@ public interface CalculationService {
 
     double calculateVolumeRatio(Cone cone, double z) throws ConeException;
 
-    boolean isCustomCone(Point center, double radius, double height); //является ли объект конусом так делать??
+    boolean isCustomCone(Point center, double radius, double height);
 
     boolean isOnCoordinatePlane(Cone cone) throws ConeException;
 
