@@ -27,8 +27,7 @@ public class Repository {
     }
 
     public List<Cone> getCones() {
-        List<Cone> result = new ArrayList<>();
-        Collections.copy(result, this.cones);
+        List<Cone> result = new ArrayList<>(cones);
         return result;
     }
 

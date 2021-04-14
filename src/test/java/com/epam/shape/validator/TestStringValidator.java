@@ -12,6 +12,12 @@ public class TestStringValidator {
     }
 
     @Test
+    public void testValidSecondString() {
+        String validString = "5.0 0. 0.00 5 1.02";
+        Assert.assertTrue(ConeStringValidator.isCone(validString));
+    }
+
+    @Test
     public void testInvalidString() {
         String validString = "5 8 5 5 1.02a";
         Assert.assertFalse(ConeStringValidator.isCone(validString));

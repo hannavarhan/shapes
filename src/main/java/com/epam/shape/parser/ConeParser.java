@@ -25,7 +25,7 @@ public class ConeParser {
 
     public double[] parseConeStringWithValidation(String coneString) throws ConeException {
         if (!ConeStringValidator.isCone(coneString)) {
-            logger.error("string {} is inalid", coneString);
+            logger.error("string {} is invalid", coneString);
             throw new ConeException("string " + coneString + " is invalid");
         }
         double[] array = parseConeString(coneString);

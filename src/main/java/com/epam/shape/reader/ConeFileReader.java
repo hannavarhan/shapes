@@ -1,7 +1,6 @@
 package com.epam.shape.reader;
 
 import com.epam.shape.exception.ConeException;
-import com.epam.shape.service.impl.CalculationServiceImpl;
 import com.epam.shape.validator.ConeStringValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class ConeFileReader {
 
-    private final static Logger logger = LogManager.getLogger(CalculationServiceImpl.class);
+    private final static Logger logger = LogManager.getLogger(ConeFileReader.class);
 
     public ArrayList<String> readLinesFromFile(String path) throws ConeException {
         ArrayList<String> result;
@@ -23,6 +22,7 @@ public class ConeFileReader {
             result = Files.lines(Paths.get(path), StandardCharsets.UTF_8)
                     .filter(ConeStringValidator::isCone)
                     .collect(Collectors.toCollection(ArrayList::new));
+            logger.info("result of readLinesFromFile is {}", result);
         } catch (IOException e) {
             logger.error("IOException in read from file method");
             throw new ConeException("IOException in read from file method");

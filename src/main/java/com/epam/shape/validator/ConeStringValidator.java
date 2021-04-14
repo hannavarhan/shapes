@@ -10,7 +10,8 @@ public class ConeStringValidator {
 
     private final static Logger logger = LogManager.getLogger(ConeStringValidator.class);
 
-    final static String IS_VALID_CONE_STRING = "^(-?\\d+(\\.\\d{1,2})?\\s){3}(\\d+(\\.\\d{1,2})?\\s)(\\d+(\\.\\d{1,2})?)$";
+    final static String IS_VALID_CONE_STRING =
+            "^(-?\\d+(\\.)?(\\d{1,2})?\\s){3}(([1-9]\\d*(\\.)?(\\d{1,2})?)|([0]\\.\\d{1,2}))\\s(([1-9]\\d*(\\.)?(\\d{1,2})?)|([0]\\.\\d{1,2}))$";
 
     public static boolean isCone(String line) {
         Pattern pattern = Pattern.compile(IS_VALID_CONE_STRING);

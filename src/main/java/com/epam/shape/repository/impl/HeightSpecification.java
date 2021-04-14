@@ -14,6 +14,6 @@ public class HeightSpecification implements Specification {
     @Override
     public boolean specify(Cone cone) {
         boolean result = cone.getHeight() <= maxHeight;
-        return false;
+        return result;
     }
 }

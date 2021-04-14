@@ -27,11 +27,25 @@ public class ConeFactory {
         return cone;
     }
 
+    public static Cone getConeFromFactory(double[] array) throws ConeException {
+        if (array.length != 5) {
+            logger.error("wrong array size {} in factory", array.length);
+            throw new ConeException("Wrong array size " + array.length);
+        }
+        double radius = array[3];
+        double height = array[4];
+        validateData(radius, height);
+        Point point = new Point(array[0], array[1], array[2]);
+        Cone cone = new Cone(point, radius, height);
+        logger.info("new cone {} was created", cone);
+        return cone;
+    }
+
     private static void validateData(double radius, double height) throws ConeException {
         if (!ConeDataValidator.isRadiusValid(radius)
                 || !ConeDataValidator.isHeightValid(height)) {
-            logger.error("data {} or {} is invalid", radius, height);
-            throw new ConeException("data is invalid: " + radius + " or " + height);
+            logger.error("radius {} or height {} is invalid", radius, height);
+            throw new ConeException("Radius or height is invalid: " + radius + " or " + height);
         }
     }
 }
