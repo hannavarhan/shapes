@@ -2,9 +2,9 @@ package com.epam.shape.observer;
 
 public interface Observable {
 
-    void attach(Observer observer);
+    void attach(ConeObserver observer);
 
-    void detach(Observer observer);
+    void detach(ConeObserver observer);
 
     void notifyObservers();
 }

@@ -13,11 +13,11 @@ public class ConeStringValidator {
     final static String IS_VALID_CONE_STRING =
             "^(-?\\d+(\\.)?(\\d{1,2})?\\s){3}(([1-9]\\d*(\\.)?(\\d{1,2})?)|([0]\\.\\d{1,2}))\\s(([1-9]\\d*(\\.)?(\\d{1,2})?)|([0]\\.\\d{1,2}))$";
 
-    public static boolean isCone(String line) {
+    public static boolean isCone(String coneLine) {
         Pattern pattern = Pattern.compile(IS_VALID_CONE_STRING);
-        Matcher matcher = pattern.matcher(line.trim());
+        Matcher matcher = pattern.matcher(coneLine.trim());
         boolean isMatches = matcher.matches();
-        logger.info("method isCone for line " + line + " returns " + isMatches);
+        logger.info("method isCone for line " + coneLine + " returns " + isMatches);
         return isMatches;
     }
 }

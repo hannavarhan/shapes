@@ -1,11 +1,14 @@
-package com.epam.shape.main;
+package com.epam.shape._main;
 
-import com.epam.shape.creator.ConeCreator;
+import com.epam.shape.factory.ConeFactory;
+import com.epam.shape.filler.RepositoryFiller;
 import com.epam.shape.entity.Cone;
 import com.epam.shape.entity.Point;
 import com.epam.shape.entity.ShapeParameters;
 import com.epam.shape.entity.Warehouse;
 import com.epam.shape.exception.ConeException;
+import com.epam.shape.filler.WarehouseFiller;
+import com.epam.shape.observer.impl.ConeObserverImpl;
 import com.epam.shape.parser.ConeParser;
 import com.epam.shape.reader.ConeFileReader;
 import com.epam.shape.repository.Repository;
@@ -32,18 +35,20 @@ public class Main {
         ConeFileReader reader = new ConeFileReader();
         ArrayList<String> readLines = reader.readLinesFromFile(filepath);
         ConeParser parser = new ConeParser();
-        ConeCreator coneCreator = new ConeCreator();
-        for(String line : readLines) {
+        RepositoryFiller filler = new RepositoryFiller();
+        for (String line : readLines) {
             double[] array = parser.parseConeString(line);
-            coneCreator.fillRepositoryWithCone(array);
+            filler.fillRepositoryWithCone(array);
         }
-        coneCreator.fillRepositoryWithCone(new Point(-5, 8, 2), 1, 2.25);
-        coneCreator.fillRepositoryWithCone(1.2, 2, 8, 1.8, 3.33);
+        filler.fillRepositoryWithCone(new Point(-5, 8, 2), 1, 2.25);
+        filler.fillRepositoryWithCone(1.2, 2, 8, 1.8, 3.33);
 
 
         Repository repository = Repository.getInstance();
-        for(Cone cone : repository.getCones()) {
+        for (Cone cone : repository.getCones()) {
             logger.info(cone);
+            WarehouseFiller warehouseFiller = new WarehouseFiller();
+            warehouseFiller.fillWarehouse(cone);
             Warehouse warehouse = Warehouse.getInstance();
             ShapeParameters shapeParameters = warehouse.get(cone.getId());
             logger.info(shapeParameters);
@@ -54,6 +59,14 @@ public class Main {
 
         Specification specificationR = new RadiusSpecification(1, 4);
         logger.info(repository.queryStream(specificationR));
+
+        Cone cone = ConeFactory.getConeFromFactory(0, 0, 0, 1, 2);
+        WarehouseFiller warehouseFiller = new WarehouseFiller();
+        warehouseFiller.fillWarehouse(cone);
+        RepositoryFiller repositoryFiller = new RepositoryFiller();
+        repositoryFiller.fillRepositoryWithCone(cone);
+        cone.attach(new ConeObserverImpl());
+        cone.setHeight(5);
 
     }
 }

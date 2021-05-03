@@ -67,7 +67,7 @@ public class CalculationServiceImpl implements CalculationService {
     }
 
     @Override
-    public boolean isCustomCone(Point center, double radius, double height) { //????????????????????
+    public boolean isCone(Point center, double radius, double height) { //????????????????????
         boolean isCone = ConeDataValidator.isRadiusValid(radius) && ConeDataValidator.isHeightValid(height);
         return isCone;
     }

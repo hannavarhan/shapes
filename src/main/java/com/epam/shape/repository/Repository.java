@@ -10,9 +10,8 @@ import java.util.stream.Collectors;
 public class Repository {
 
     private final static Logger logger = LogManager.getLogger(Repository.class);
-
-    private List<Cone> cones;
     private static Repository instance;
+    private List<Cone> cones;
 
     public static Repository getInstance() {
         if (instance == null) {
@@ -32,6 +31,7 @@ public class Repository {
     }
 
     public boolean add(Cone cone) {
+        logger.info("Cone {} was added to Repository", cone);
         return cones.add(cone);
     }
 
@@ -47,8 +47,9 @@ public class Repository {
         return cones.removeAll(c);
     }
 
-    public Cone get(int index) {
-        return cones.get(index);
+    public Optional<Cone> get(int index) {
+        Cone cone = cones.get(index);
+        return cone == null ? Optional.empty() : Optional.of(cone);
     }
 
     public Cone set(int index, Cone element) {

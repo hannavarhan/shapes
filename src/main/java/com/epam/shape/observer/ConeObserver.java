@@ -1,6 +1,6 @@
 package com.epam.shape.observer;
 
-public interface Observer {
+public interface ConeObserver {
 
     void updateSurfaceArea(ConeEvent coneEvent);
 

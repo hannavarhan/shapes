@@ -24,8 +24,8 @@ public class ConeFileReader {
                     .collect(Collectors.toCollection(ArrayList::new));
             logger.info("result of readLinesFromFile is {}", result);
         } catch (IOException e) {
-            logger.error("IOException in read from file method");
-            throw new ConeException("IOException in read from file method");
+            logger.error("IOException in read from file method with path {}: {}", path, e.getMessage());
+            throw new ConeException("IOException in read from file method with path " + path);
         }
         return result;
     }

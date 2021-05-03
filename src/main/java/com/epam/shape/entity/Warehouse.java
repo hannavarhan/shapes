@@ -1,5 +1,6 @@
 package com.epam.shape.entity;
 
+import com.epam.shape.exception.ConeException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -9,9 +10,8 @@ import java.util.Map;
 public class Warehouse {
 
     private final static Logger logger = LogManager.getLogger(Warehouse.class);
-
-    private Map<Long, ShapeParameters> map;
     private static Warehouse instance;
+    private Map<Long, ShapeParameters> map;
 
     public static Warehouse getInstance() {
         if (instance == null) {
@@ -25,7 +25,11 @@ public class Warehouse {
         this.map = new HashMap<>();
     }
 
-    public ShapeParameters get(Long id) {
+    public ShapeParameters get(Long id) throws ConeException {
+        if (!map.containsKey(id)) {
+            logger.error("Warehouse does not contains cone with id {}", id);
+            throw new ConeException("Warehouse does not contains cone with id " + id);
+        }
         return map.get(id);
     }
 

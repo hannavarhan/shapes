@@ -3,7 +3,7 @@ package com.epam.shape.entity;
 import com.epam.shape.exception.ConeException;
 import com.epam.shape.observer.ConeEvent;
 import com.epam.shape.observer.Observable;
-import com.epam.shape.observer.Observer;
+import com.epam.shape.observer.ConeObserver;
 import com.epam.shape.validator.ConeDataValidator;
 
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ public class Cone extends Shape implements Observable {
     private Point center;
     private double radius;
     private double height;
-    private ArrayList<Observer> observers = new ArrayList<>();
+    private ArrayList<ConeObserver> observers = new ArrayList<>();
 
     public Cone(Point center, double radius, double height) {
         super();
@@ -57,12 +57,12 @@ public class Cone extends Shape implements Observable {
     }
 
     @Override
-    public void attach(Observer observer) {
+    public void attach(ConeObserver observer) {
         observers.add(observer);
     }
 
     @Override
-    public void detach(Observer observer) {
+    public void detach(ConeObserver observer) {
         observers.remove(observer);
     }
 
@@ -70,7 +70,7 @@ public class Cone extends Shape implements Observable {
     public void notifyObservers() {
         ConeEvent event = new ConeEvent(this);
         if (!observers.isEmpty()) {
-            for (Observer observer : observers) {
+            for (ConeObserver observer : observers) {
                 observer.updateSurfaceArea(event);
                 observer.updateVolume(event);
             }

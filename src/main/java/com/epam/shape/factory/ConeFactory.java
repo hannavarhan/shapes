@@ -12,7 +12,11 @@ public class ConeFactory {
     private final static Logger logger = LogManager.getLogger(ConeFactory.class);
 
     public static Cone getConeFromFactory(Point point, double radius, double height) throws ConeException {
-        validateData(radius, height);
+        if (!ConeDataValidator.isRadiusValid(radius)
+                || !ConeDataValidator.isHeightValid(height)) {
+            logger.error("radius {} or height {} is invalid", radius, height);
+            throw new ConeException("Radius or height is invalid: " + radius + " or " + height);
+        }
         Cone cone = new Cone(point, radius, height);
         logger.info("new cone {} was created", cone);
         return cone;
@@ -20,10 +24,8 @@ public class ConeFactory {
 
     public static Cone getConeFromFactory(double x, double y, double z, double radius, double height)
             throws ConeException {
-        validateData(radius, height);
         Point point = new Point(x, y, z);
-        Cone cone = new Cone(point, radius, height);
-        logger.info("new cone {} was created", cone);
+        Cone cone = getConeFromFactory(point, radius, height);
         return cone;
     }
 
@@ -34,18 +36,8 @@ public class ConeFactory {
         }
         double radius = array[3];
         double height = array[4];
-        validateData(radius, height);
         Point point = new Point(array[0], array[1], array[2]);
-        Cone cone = new Cone(point, radius, height);
-        logger.info("new cone {} was created", cone);
+        Cone cone = getConeFromFactory(point, radius, height);
         return cone;
-    }
-
-    private static void validateData(double radius, double height) throws ConeException {
-        if (!ConeDataValidator.isRadiusValid(radius)
-                || !ConeDataValidator.isHeightValid(height)) {
-            logger.error("radius {} or height {} is invalid", radius, height);
-            throw new ConeException("Radius or height is invalid: " + radius + " or " + height);
-        }
     }
 }

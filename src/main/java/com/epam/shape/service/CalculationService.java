@@ -12,7 +12,7 @@ public interface CalculationService {
 
     double calculateVolumeRatio(Cone cone, double z) throws ConeException;
 
-    boolean isCustomCone(Point center, double radius, double height);
+    boolean isCone(Point center, double radius, double height);
 
     boolean isOnCoordinatePlane(Cone cone) throws ConeException;
 
