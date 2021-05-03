@@ -35,19 +35,17 @@ public class Main {
         ConeFileReader reader = new ConeFileReader();
         ArrayList<String> readLines = reader.readLinesFromFile(filepath);
         ConeParser parser = new ConeParser();
-        RepositoryFiller filler = new RepositoryFiller();
+        RepositoryFiller repositoryFiller = new RepositoryFiller();
+        WarehouseFiller warehouseFiller = new WarehouseFiller();
         for (String line : readLines) {
             double[] array = parser.parseConeString(line);
-            filler.fillRepositoryWithCone(array);
+            Cone cone = ConeFactory.getConeFromFactory(array);
+            repositoryFiller.fillRepositoryWithCone(cone);
         }
-        filler.fillRepositoryWithCone(new Point(-5, 8, 2), 1, 2.25);
-        filler.fillRepositoryWithCone(1.2, 2, 8, 1.8, 3.33);
-
 
         Repository repository = Repository.getInstance();
         for (Cone cone : repository.getCones()) {
             logger.info(cone);
-            WarehouseFiller warehouseFiller = new WarehouseFiller();
             warehouseFiller.fillWarehouse(cone);
             Warehouse warehouse = Warehouse.getInstance();
             ShapeParameters shapeParameters = warehouse.get(cone.getId());
@@ -61,12 +59,9 @@ public class Main {
         logger.info(repository.queryStream(specificationR));
 
         Cone cone = ConeFactory.getConeFromFactory(0, 0, 0, 1, 2);
-        WarehouseFiller warehouseFiller = new WarehouseFiller();
         warehouseFiller.fillWarehouse(cone);
-        RepositoryFiller repositoryFiller = new RepositoryFiller();
         repositoryFiller.fillRepositoryWithCone(cone);
         cone.attach(new ConeObserverImpl());
         cone.setHeight(5);
-
     }
 }

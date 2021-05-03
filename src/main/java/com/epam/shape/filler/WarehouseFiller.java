@@ -13,10 +13,10 @@ public class WarehouseFiller {
         long id = cone.getId();
         Warehouse warehouse = Warehouse.getInstance();
         CalculationService service = new CalculationServiceImpl();
-        double surfaceArea = service.calculateSurfaceArea(cone);
-        double volume = service.calculateVolume(cone);
         ShapeParameters shapeParameters = new ShapeParameters();
+        double surfaceArea = service.calculateSurfaceArea(cone);
         shapeParameters.setSurfaceArea(surfaceArea);
+        double volume = service.calculateVolume(cone);
         shapeParameters.setVolume(volume);
         warehouse.put(id, shapeParameters);
     }

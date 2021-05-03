@@ -99,7 +99,7 @@ public class Cone extends Shape implements Observable {
     public String toString() {
         final StringBuilder sb = new StringBuilder("Cone{");
         sb.append("coneId=").append(this.getId());
-        sb.append("center=").append(center);
+        sb.append(", center=").append(center);
         sb.append(", radius=").append(radius);
         sb.append(", height=").append(height);
         sb.append('}');
